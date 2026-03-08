@@ -1,7 +1,12 @@
 // =====================================================
 // -The Signature Brew Reservation Email Backend
 // =====================================================
-require('dotenv').config();
+// Setup:
+//   1. npm init -y
+//   2. npm install express cors nodemailer
+//   3. Update SMTP credentials below
+//   4. node server.js
+// =====================================================
 
 const express = require('express');
 const cors = require('cors');
@@ -14,21 +19,14 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // Put your HTML file in /public
 
-// ---- EMAIL TRANSPORTER (Gmail + IPv4 force — works on Render!) ----
+// ---- CONFIGURE YOUR EMAIL CREDENTIALS ----
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    family: 4,
+    service: 'gmail', // or 'outlook', 'yahoo', etc.
     auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASS
-    },
-    tls: {
-        rejectUnauthorized: false
+        user: process.env.EMAIL,       // ← Replace with your email
+        pass: process.env.EMAIL_PASSWORD            // ← Replace with App Password (not regular password)
     }
 });
 
@@ -48,9 +46,9 @@ app.post('/api/reserve', async (req, res) => {
 
     // Email to café owner
     const ownerMailOptions = {
-        from: '"The Signature Brew" <manavvalera05@gmail.com>',
-        to: 'manavvalera05@gmail.com',
-        subject: `🍽️ New Table Reservation – The Signature Brew`,
+        from: '"The Signature Brew Website" <manavvalera05@gmail.com>',
+        to: 'manavvalera69@gmail.com',  // ← Replace with café owner's email
+        subject: `🍽️ New Table Reservation – The Signature Brew `,
         html: `
             <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#1a1412;color:#f5e6d3;border-radius:16px;overflow:hidden;">
                 <div style="background:linear-gradient(135deg,#c8a97e,#8a6d3b);padding:30px;text-align:center;">
@@ -118,7 +116,7 @@ app.post('/api/reserve', async (req, res) => {
                     <p style="color:#c8a97e;">With love,<br>Team The Signature Brew ☕</p>
                 </div>
                 <div style="padding:20px;background:rgba(200,169,126,0.1);text-align:center;font-size:12px;color:rgba(245,230,211,0.5);">
-                    83 /A हाई विद्यालय, Alkapuri, Vadodara, Gujarat 390007 | +91 81412 87148
+                    83 /A हाई विद्यालय,Alkapuri, Vadodara, Gujarat 390007 | +91 81412 87148 
                 </div>
             </div>
         `
