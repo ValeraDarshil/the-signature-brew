@@ -1,0 +1,3856 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Signature Brew — Where Every Sip Feels Special</title>
+    <meta
+      name="description"
+      content="The Signature Brew - Premium café experience with artisan coffee, exquisite desserts and an atmosphere that inspires."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      /* ========================================
+           CSS CUSTOM PROPERTIES & RESET
+        ======================================== */
+      :root {
+        --bg-primary: #0a0908;
+        --bg-secondary: #151210;
+        --bg-tertiary: #1c1714;
+        --bg-card: rgba(28, 23, 20, 0.85);
+        --gold: #c8a97e;
+        --gold-light: #dfc5a2;
+        --gold-bright: #e8c878;
+        --gold-dark: #8a6d3b;
+        --cream: #f5e6d3;
+        --cream-dark: #c4b49e;
+        --brown: #4a2c2a;
+        --brown-light: #6b3a2a;
+        --brown-warm: #8b5e3c;
+        --coffee: #2a1408;
+        --text-primary: #f5e6d3;
+        --text-secondary: rgba(245, 230, 211, 0.7);
+        --text-muted: rgba(245, 230, 211, 0.45);
+        --glass: rgba(20, 16, 14, 0.65);
+        --glass-light: rgba(200, 169, 126, 0.08);
+        --glass-border: rgba(200, 169, 126, 0.15);
+        --gold-glow: 0 0 30px rgba(200, 169, 126, 0.15);
+        --shadow-lg: 0 25px 80px rgba(0, 0, 0, 0.6);
+        --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.4);
+        --radius-sm: 8px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+        --radius-xl: 32px;
+        --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --transition-slow: 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gold) var(--bg-primary);
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--gold-dark);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--gold);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        transition: var(--transition);
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      ul {
+        list-style: none;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .section-padding {
+        padding: 120px 0;
+      }
+
+      /* Gradient text */
+      .gradient-text {
+        background: linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold),
+          var(--gold-bright)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Decorative line */
+      .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.8rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 16px;
+        font-weight: 500;
+      }
+      .section-label::before,
+      .section-label::after {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--gold);
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin-bottom: 20px;
+        color: var(--cream);
+      }
+      .section-subtitle {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 70px;
+      }
+
+      /* ========================================
+           PRELOADER
+        ======================================== */
+      #preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: var(--bg-primary);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition:
+          opacity 0.8s,
+          visibility 0.8s;
+      }
+      #preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .preloader-cup {
+        width: 60px;
+        height: 50px;
+        border: 3px solid var(--gold);
+        border-radius: 0 0 20px 20px;
+        position: relative;
+        animation: preloaderPulse 1.5s ease-in-out infinite;
+      }
+      .preloader-cup::after {
+        content: "";
+        position: absolute;
+        right: -18px;
+        top: 10px;
+        width: 14px;
+        height: 24px;
+        border: 3px solid var(--gold);
+        border-left: none;
+        border-radius: 0 12px 12px 0;
+      }
+      .preloader-steam {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 10px;
+      }
+      .preloader-steam span {
+        width: 3px;
+        height: 20px;
+        background: var(--gold);
+        border-radius: 2px;
+        opacity: 0;
+        animation: steamRise 1.2s ease-in-out infinite;
+      }
+      .preloader-steam span:nth-child(2) {
+        animation-delay: 0.2s;
+        height: 25px;
+      }
+      .preloader-steam span:nth-child(3) {
+        animation-delay: 0.4s;
+        height: 18px;
+      }
+
+      .preloader-text {
+        margin-top: 30px;
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        color: var(--gold);
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        animation: preloaderPulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes steamRise {
+        0% {
+          opacity: 0;
+          transform: translateY(0) scaleY(0.5);
+        }
+        50% {
+          opacity: 0.7;
+          transform: translateY(-10px) scaleY(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-25px) scaleY(0.5);
+        }
+      }
+      @keyframes preloaderPulse {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* ========================================
+           NAVIGATION
+        ======================================== */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 20px 0;
+        transition: var(--transition);
+      }
+      .navbar.scrolled {
+        background: rgba(10, 9, 8, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        padding: 12px 0;
+      }
+      .nav-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--gold);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .nav-logo i {
+        font-size: 1rem;
+      }
+      .nav-links {
+        display: flex;
+        gap: 36px;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        font-weight: 400;
+        position: relative;
+        padding: 4px 0;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--gold);
+        transition: var(--transition);
+      }
+      .nav-links a:hover {
+        color: var(--gold);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .nav-reserve-btn {
+        padding: 10px 28px;
+        border: 1px solid var(--gold);
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        border-radius: 100px;
+        cursor: pointer;
+        background: transparent;
+        font-family: "Poppins", sans-serif;
+        transition: var(--transition);
+      }
+      .nav-reserve-btn:hover {
+        background: var(--gold);
+        color: var(--bg-primary);
+        box-shadow: var(--gold-glow);
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 5px;
+      }
+      .hamburger span {
+        width: 25px;
+        height: 2px;
+        background: var(--gold);
+        transition: var(--transition);
+      }
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* Mobile menu */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(10, 9, 8, 0.98);
+        backdrop-filter: blur(30px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+      .mobile-menu.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .mobile-menu a {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        color: var(--cream);
+        letter-spacing: 3px;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+
+      /* ========================================
+           HERO SECTION
+        ======================================== */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #hero-canvas {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+      .hero-gradient {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background:
+          radial-gradient(
+            ellipse at 30% 50%,
+            rgba(139, 94, 60, 0.15) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 70% 30%,
+            rgba(200, 169, 126, 0.08) 0%,
+            transparent 50%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(10, 9, 8, 0.3) 0%,
+            rgba(10, 9, 8, 0.6) 100%
+          );
+      }
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        max-width: 900px;
+        padding: 0 24px;
+      }
+      .hero-badge {
+        display: inline-block;
+        padding: 8px 24px;
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        font-size: 0.75rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 30px;
+        background: var(--glass-light);
+        backdrop-filter: blur(10px);
+      }
+      .hero-title {
+        font-size: clamp(3rem, 8vw, 6.5rem);
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--cream);
+        text-shadow: 0 0 60px rgba(200, 169, 126, 0.2);
+      }
+      .hero-title .highlight {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .hero-subtitle {
+        font-size: clamp(1rem, 2vw, 1.35rem);
+        color: var(--text-secondary);
+        margin-bottom: 50px;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 16px 42px;
+        border-radius: 100px;
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-family: "Poppins", sans-serif;
+        cursor: pointer;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        border: none;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: var(--bg-primary);
+        box-shadow: 0 8px 30px rgba(200, 169, 126, 0.25);
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(200, 169, 126, 0.35);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--cream);
+        border: 1px solid rgba(245, 230, 211, 0.3);
+      }
+      .btn-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(200, 169, 126, 0.1);
+      }
+
+      .hero-scroll-indicator {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .hero-scroll-indicator span {
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .scroll-line {
+        width: 1px;
+        height: 40px;
+        background: var(--glass-border);
+        position: relative;
+        overflow: hidden;
+      }
+      .scroll-line::after {
+        content: "";
+        position: absolute;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--gold);
+        animation: scrollDown 2s ease-in-out infinite;
+      }
+      @keyframes scrollDown {
+        0% {
+          top: -100%;
+        }
+        50% {
+          top: 100%;
+        }
+        100% {
+          top: 100%;
+        }
+      }
+
+      /* Floating particles */
+      .hero-particles {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--gold);
+        opacity: 0.15;
+        animation: floatParticle linear infinite;
+      }
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.15;
+        }
+        90% {
+          opacity: 0.15;
+        }
+        100% {
+          transform: translateY(-10vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* ========================================
+           ABOUT SECTION
+        ======================================== */
+      .about {
+        background: var(--bg-secondary);
+        position: relative;
+        overflow: hidden;
+      }
+      .about::before {
+        content: "";
+        position: absolute;
+        top: -200px;
+        right: -200px;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(200, 169, 126, 0.04) 0%,
+          transparent 70%
+        );
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      .about-images {
+        position: relative;
+      }
+      .about-img-main {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+      }
+      .about-img-float {
+        position: absolute;
+        bottom: -40px;
+        right: -40px;
+        width: 200px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: var(--radius-md);
+        border: 4px solid var(--bg-secondary);
+        box-shadow: var(--shadow-md);
+      }
+      .about-experience-badge {
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--gold-glow);
+      }
+      .about-experience-badge .number {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--bg-primary);
+        line-height: 1;
+      }
+      .about-experience-badge .label {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--bg-primary);
+        font-weight: 600;
+      }
+      .about-content {
+        padding: 20px 0;
+      }
+      .about-content .section-label {
+        margin-bottom: 12px;
+      }
+      .about-text {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+        line-height: 1.9;
+      }
+      .about-features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .about-feature {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .about-feature i {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--glass-light);
+        border: 1px solid var(--glass-border);
+        color: var(--gold);
+        font-size: 0.9rem;
+      }
+      .about-feature h4 {
+        font-size: 0.95rem;
+        margin-bottom: 4px;
+        color: var(--cream);
+      }
+      .about-feature p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+
+      /* ========================================
+           MENU SECTION
+        ======================================== */
+      .menu {
+        background: var(--bg-primary);
+        position: relative;
+      }
+      .menu-filters {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 50px;
+        flex-wrap: wrap;
+      }
+      .filter-btn {
+        padding: 10px 28px;
+        border-radius: 100px;
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: var(--transition);
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--text-secondary);
+        font-family: "Poppins", sans-serif;
+      }
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: var(--gold);
+        color: var(--bg-primary);
+        border-color: var(--gold);
+      }
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+      }
+      .menu-card {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: var(--transition);
+        cursor: pointer;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .menu-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(200, 169, 126, 0.12);
+        border-color: rgba(200, 169, 126, 0.3);
+      }
+      .menu-card.hidden-card {
+        display: none;
+      }
+      .menu-card-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition: var(--transition-slow);
+      }
+      .menu-card:hover .menu-card-img {
+        transform: scale(1.05);
+      }
+      .menu-card-img-wrapper {
+        overflow: hidden;
+        position: relative;
+      }
+      .menu-card-category {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        padding: 5px 14px;
+        border-radius: 100px;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: rgba(10, 9, 8, 0.7);
+        backdrop-filter: blur(10px);
+        color: var(--gold);
+        border: 1px solid var(--glass-border);
+      }
+      .menu-card-body {
+        padding: 24px;
+      }
+      .menu-card-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.15rem;
+        margin-bottom: 6px;
+        color: var(--cream);
+      }
+      .menu-card-desc {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+        line-height: 1.6;
+      }
+      .menu-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .menu-card-price {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        color: var(--gold);
+        font-weight: 600;
+      }
+      .menu-card-order {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--glass-light);
+        border: 1px solid var(--glass-border);
+        color: var(--gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.85rem;
+      }
+      .menu-card-order:hover {
+        background: var(--gold);
+        color: var(--bg-primary);
+      }
+
+      /* ========================================
+           SIGNATURE DRINKS
+        ======================================== */
+      .signature {
+        background: var(--bg-secondary);
+        position: relative;
+        overflow: hidden;
+      }
+      .signature::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 50% 0%,
+          rgba(200, 169, 126, 0.06) 0%,
+          transparent 60%
+        );
+      }
+      .signature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+      .signature-card {
+        position: relative;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        group: true;
+        cursor: pointer;
+        border: 1px solid var(--glass-border);
+        transition: var(--transition);
+      }
+      .signature-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 60px rgba(200, 169, 126, 0.15);
+      }
+      .signature-card img {
+        width: 100%;
+        height: 380px;
+        object-fit: cover;
+        transition: var(--transition-slow);
+      }
+      .signature-card:hover img {
+        transform: scale(1.1);
+      }
+      .signature-card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(10, 9, 8, 0.95) 0%,
+          rgba(10, 9, 8, 0.3) 50%,
+          transparent 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 30px;
+      }
+      .signature-card-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        color: var(--cream);
+        margin-bottom: 6px;
+      }
+      .signature-card-desc {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+      .signature-card-price {
+        font-size: 1.1rem;
+        color: var(--gold);
+        font-weight: 600;
+      }
+
+      /* ========================================
+           AI DRINK RECOMMENDER
+        ======================================== */
+      .recommender {
+        background: var(--bg-primary);
+        position: relative;
+      }
+      .recommender-box {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 60px;
+        backdrop-filter: blur(20px);
+        position: relative;
+        overflow: hidden;
+      }
+      .recommender-box::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: 20%;
+        right: 20%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+      }
+      .recommender-title {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 10px;
+        color: var(--cream);
+      }
+      .recommender-subtitle {
+        text-align: center;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        font-size: 0.95rem;
+      }
+      .preference-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 40px;
+      }
+      .pref-btn {
+        padding: 18px;
+        border-radius: var(--radius-md);
+        background: var(--glass-light);
+        border: 1px solid var(--glass-border);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: var(--transition);
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+      }
+      .pref-btn:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .pref-btn.selected {
+        background: rgba(200, 169, 126, 0.15);
+        border-color: var(--gold);
+        color: var(--gold);
+        box-shadow: var(--gold-glow);
+      }
+      .pref-btn i {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+      }
+
+      .recommend-result {
+        text-align: center;
+        padding: 30px;
+        border-radius: var(--radius-md);
+        background: var(--glass-light);
+        border: 1px solid var(--glass-border);
+        display: none;
+      }
+      .recommend-result.active {
+        display: block;
+        animation: fadeInUp 0.6s ease;
+      }
+      .recommend-result h3 {
+        font-size: 1.2rem;
+        color: var(--gold);
+        margin-bottom: 8px;
+      }
+      .recommend-result p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+      .recommend-result .drink-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        color: var(--cream);
+        margin: 16px 0 8px;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ========================================
+           GALLERY
+        ======================================== */
+      .gallery {
+        background: var(--bg-secondary);
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 250px;
+        gap: 16px;
+      }
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+      }
+      .gallery-item:nth-child(1) {
+        grid-row: span 2;
+      }
+      .gallery-item:nth-child(4) {
+        grid-column: span 2;
+      }
+      .gallery-item:nth-child(6) {
+        grid-row: span 2;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition-slow);
+      }
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+      .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 9, 8, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+      }
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+      .gallery-overlay i {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transform: scale(0.5);
+        transition: var(--transition);
+      }
+      .gallery-item:hover .gallery-overlay i {
+        transform: scale(1);
+      }
+
+      /* Lightbox */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+      }
+      .lightbox.active {
+        display: flex;
+      }
+      .lightbox img {
+        max-width: 85vw;
+        max-height: 85vh;
+        border-radius: var(--radius-md);
+        object-fit: contain;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        color: var(--cream);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: var(--transition);
+      }
+      .lightbox-close:hover {
+        background: var(--gold);
+        color: var(--bg-primary);
+      }
+
+      /* ========================================
+           POPULAR TODAY
+        ======================================== */
+      .popular {
+        background: var(--bg-primary);
+        position: relative;
+        overflow: hidden;
+      }
+      .popular-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+      .popular-card {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 30px;
+        text-align: center;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+      .popular-card::before {
+        content: "🔥";
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 1.5rem;
+      }
+      .popular-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 50px rgba(200, 169, 126, 0.1);
+        border-color: rgba(200, 169, 126, 0.3);
+      }
+      .popular-card img {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 20px;
+        border: 3px solid var(--glass-border);
+        transition: var(--transition);
+      }
+      .popular-card:hover img {
+        border-color: var(--gold);
+        transform: scale(1.05);
+      }
+      .popular-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+        color: var(--cream);
+      }
+      .popular-card p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 12px;
+      }
+      .popular-card .price {
+        color: var(--gold);
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      /* ========================================
+           GROWTH / BUSINESS SECTION
+        ======================================== */
+      .growth {
+        background: linear-gradient(
+          135deg,
+          var(--bg-secondary) 0%,
+          var(--bg-tertiary) 100%
+        );
+        position: relative;
+      }
+      .growth-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+      .growth-card {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 40px 30px;
+        text-align: center;
+        transition: var(--transition);
+        backdrop-filter: blur(10px);
+      }
+      .growth-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(200, 169, 126, 0.3);
+        box-shadow: var(--gold-glow);
+      }
+      .growth-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(200, 169, 126, 0.15),
+          rgba(200, 169, 126, 0.05)
+        );
+        border: 1px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+        font-size: 1.5rem;
+        color: var(--gold);
+      }
+      .growth-card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 12px;
+        color: var(--cream);
+      }
+      .growth-card p {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+      }
+
+      /* ========================================
+           TESTIMONIALS
+        ======================================== */
+      .testimonials {
+        background: var(--bg-primary);
+        position: relative;
+        overflow: hidden;
+      }
+      .testimonial-track-wrapper {
+        overflow: hidden;
+        position: relative;
+      }
+      .testimonial-track {
+        display: flex;
+        gap: 30px;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .testimonial-card {
+        min-width: calc(33.333% - 20px);
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 40px;
+        backdrop-filter: blur(10px);
+      }
+      .testimonial-stars {
+        color: var(--gold-bright);
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+      }
+      .testimonial-text {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 24px;
+        font-style: italic;
+      }
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .testimonial-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        font-size: 1.1rem;
+        color: var(--bg-primary);
+        font-weight: 700;
+      }
+      .testimonial-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--cream);
+      }
+      .testimonial-role {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+
+      .testimonial-nav {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 40px;
+      }
+      .testimonial-nav button {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        color: var(--gold);
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .testimonial-nav button:hover {
+        background: var(--gold);
+        color: var(--bg-primary);
+      }
+
+      /* ========================================
+           RESERVATION
+        ======================================== */
+      .reservation {
+        background: var(--bg-secondary);
+        position: relative;
+        overflow: hidden;
+      }
+      .reservation-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .reservation-image {
+        position: relative;
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        height: 650px;
+      }
+      .reservation-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .reservation-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(10, 9, 8, 0.8) 0%,
+          transparent 50%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 40px;
+      }
+      .reservation-image-overlay h3 {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+        color: var(--cream);
+      }
+      .reservation-image-overlay p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .reservation-form-wrapper {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 50px;
+        backdrop-filter: blur(20px);
+      }
+      .reservation-form-wrapper h2 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+        color: var(--cream);
+      }
+      .reservation-form-wrapper > p {
+        color: var(--text-muted);
+        margin-bottom: 35px;
+        font-size: 0.9rem;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 14px 18px;
+        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--glass-border);
+        color: var(--cream);
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        transition: var(--transition);
+        outline: none;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.1);
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+      .form-group select option {
+        background: var(--bg-primary);
+        color: var(--cream);
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: var(--radius-sm);
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: var(--bg-primary);
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(200, 169, 126, 0.3);
+      }
+
+      .form-success {
+        display: none;
+        text-align: center;
+        padding: 40px;
+      }
+      .form-success.active {
+        display: block;
+        animation: fadeInUp 0.6s ease;
+      }
+      .form-success i {
+        font-size: 3rem;
+        color: var(--gold);
+        margin-bottom: 16px;
+      }
+      .form-success h3 {
+        font-size: 1.5rem;
+        color: var(--cream);
+        margin-bottom: 8px;
+      }
+      .form-success p {
+        color: var(--text-secondary);
+      }
+
+      /* ========================================
+           MAP SECTION
+        ======================================== */
+      .map-section {
+        background: var(--bg-primary);
+        padding: 0;
+        position: relative;
+      }
+      .map-header {
+        text-align: center;
+        padding: 80px 24px 40px;
+      }
+      .map-wrapper {
+        width: 100%;
+        height: 450px;
+        position: relative;
+        overflow: hidden;
+      }
+      .map-wrapper iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        filter: grayscale(0.7) contrast(1.1) brightness(0.8);
+        transition: var(--transition);
+      }
+      .map-wrapper:hover iframe {
+        filter: grayscale(0.3) contrast(1) brightness(0.9);
+      }
+      .map-overlay-card {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        z-index: 5;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 30px;
+        backdrop-filter: blur(20px);
+        max-width: 320px;
+      }
+      .map-overlay-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        color: var(--cream);
+      }
+      .map-overlay-card p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+      .map-overlay-card i {
+        color: var(--gold);
+        margin-right: 8px;
+      }
+
+      /* ========================================
+           INSTAGRAM SECTION
+        ======================================== */
+      .instagram {
+        background: var(--bg-secondary);
+      }
+      .insta-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+      }
+      .insta-item {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 1;
+        cursor: pointer;
+      }
+      .insta-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition-slow);
+      }
+      .insta-item:hover img {
+        transform: scale(1.15);
+      }
+      .insta-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(200, 169, 126, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+      }
+      .insta-item:hover .insta-overlay {
+        opacity: 1;
+      }
+      .insta-overlay i {
+        color: white;
+        font-size: 1.5rem;
+      }
+
+      /* ========================================
+           CONTACT SECTION
+        ======================================== */
+      .contact {
+        background: var(--bg-primary);
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+      }
+      .contact-card {
+        text-align: center;
+        padding: 40px 30px;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        transition: var(--transition);
+      }
+      .contact-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(200, 169, 126, 0.3);
+      }
+      .contact-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(200, 169, 126, 0.15),
+          rgba(200, 169, 126, 0.05)
+        );
+        border: 1px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: var(--gold);
+        font-size: 1.2rem;
+      }
+      .contact-card h3 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        color: var(--cream);
+      }
+      .contact-card p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+      }
+      .contact-card a {
+        color: var(--gold);
+      }
+      .contact-card a:hover {
+        text-decoration: underline;
+      }
+
+      /* ========================================
+           FOOTER
+        ======================================== */
+      .footer {
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--glass-border);
+        padding: 80px 0 30px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 50px;
+        margin-bottom: 60px;
+      }
+      .footer-brand .nav-logo {
+        font-size: 1.8rem;
+        margin-bottom: 16px;
+      }
+      .footer-brand p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 24px;
+      }
+      .footer-social {
+        display: flex;
+        gap: 12px;
+      }
+      .footer-social a {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--glass-light);
+        border: 1px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        transition: var(--transition);
+      }
+      .footer-social a:hover {
+        background: var(--gold);
+        color: var(--bg-primary);
+        border-color: var(--gold);
+      }
+      .footer-col h4 {
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 24px;
+      }
+      .footer-col ul li {
+        margin-bottom: 12px;
+      }
+      .footer-col ul li a {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+      }
+      .footer-col ul li a:hover {
+        color: var(--gold);
+      }
+      .footer-bottom {
+        border-top: 1px solid var(--glass-border);
+        padding-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .footer-bottom p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+      .footer-bottom a {
+        color: var(--gold);
+      }
+
+      /* ========================================
+           FLOATING RESERVE BUTTON
+        ======================================== */
+      .floating-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 900;
+        padding: 16px 30px;
+        border-radius: 100px;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: var(--bg-primary);
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 8px 30px rgba(200, 169, 126, 0.3);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        font-family: "Poppins", sans-serif;
+        animation: floatingPulse 3s ease-in-out infinite;
+      }
+      .floating-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 12px 40px rgba(200, 169, 126, 0.45);
+      }
+      @keyframes floatingPulse {
+        0%,
+        100% {
+          box-shadow: 0 8px 30px rgba(200, 169, 126, 0.3);
+        }
+        50% {
+          box-shadow: 0 8px 40px rgba(200, 169, 126, 0.5);
+        }
+      }
+
+      /* ========================================
+           REVEAL ANIMATIONS
+        ======================================== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-left {
+        opacity: 0;
+        transform: translateX(-60px);
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+      .reveal-left.active {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .reveal-right {
+        opacity: 0;
+        transform: translateX(60px);
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+      .reveal-right.active {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      /* Stagger children */
+      .stagger-children .reveal {
+        transition-delay: calc(var(--i, 0) * 0.1s);
+      }
+
+      /* ========================================
+           RESPONSIVE DESIGN
+        ======================================== */
+      @media (max-width: 1024px) {
+        .signature-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .testimonial-card {
+          min-width: calc(50% - 15px);
+        }
+        .map-overlay-card {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .section-padding {
+          padding: 80px 0;
+        }
+        .nav-links {
+          display: none;
+        }
+        .nav-reserve-btn {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .mobile-menu {
+          display: flex;
+        }
+
+        .hero-title {
+          font-size: clamp(2.2rem, 10vw, 3.5rem);
+        }
+        .hero-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+        .btn {
+          width: 100%;
+          justify-content: center;
+          max-width: 280px;
+        }
+
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .about-img-float {
+          display: none;
+        }
+        .about-img-main {
+          height: 350px;
+        }
+        .about-features {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-grid {
+          grid-template-columns: 1fr;
+        }
+        .signature-grid {
+          grid-template-columns: 1fr;
+        }
+        .signature-card img {
+          height: 280px;
+        }
+
+        .preference-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .recommender-box {
+          padding: 30px 20px;
+        }
+
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+          grid-auto-rows: 180px;
+        }
+        .gallery-item:nth-child(1) {
+          grid-row: span 1;
+        }
+        .gallery-item:nth-child(4) {
+          grid-column: span 1;
+        }
+        .gallery-item:nth-child(6) {
+          grid-row: span 1;
+        }
+
+        .popular-grid {
+          grid-template-columns: 1fr;
+        }
+        .growth-grid {
+          grid-template-columns: 1fr;
+        }
+        .testimonial-card {
+          min-width: 100%;
+        }
+        .reservation-grid {
+          grid-template-columns: 1fr;
+        }
+        .reservation-image {
+          height: 300px;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+        .insta-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          gap: 8px;
+          text-align: center;
+        }
+        .floating-btn {
+          bottom: 20px;
+          right: 20px;
+          padding: 14px 24px;
+          font-size: 0.78rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .preference-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .insta-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .hero-badge {
+          font-size: 0.65rem;
+          letter-spacing: 2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ==================== PRELOADER ==================== -->
+    <div id="preloader">
+      <div class="preloader-steam"><span></span><span></span><span></span></div>
+      <div class="preloader-cup"></div>
+      <div class="preloader-text">The Signature Brew</div>
+    </div>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <i class="fas fa-mug-hot"></i> The Signature Brew
+        </a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#menu">Menu</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <button class="nav-reserve-btn" onclick="scrollToReservation()">
+          Reserve Table
+        </button>
+        <div class="hamburger" id="hamburger" onclick="toggleMobile()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" onclick="toggleMobile()">About</a>
+      <a href="#menu" onclick="toggleMobile()">Menu</a>
+      <a href="#gallery" onclick="toggleMobile()">Gallery</a>
+      <a href="#reviews" onclick="toggleMobile()">Reviews</a>
+      <a href="#reservation" onclick="toggleMobile()">Reservation</a>
+      <a href="#contact" onclick="toggleMobile()">Contact</a>
+    </div>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero" id="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-gradient"></div>
+
+      <!-- Floating particles -->
+      <div class="hero-particles" id="heroParticles"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge">✦ Est. 2020 — Artisan Coffee</div>
+        <h1 class="hero-title">
+          Signature <span class="highlight"> Brew</span>
+        </h1>
+        <p class="hero-subtitle">
+          Where Every Sip Feels Special — Handcrafted coffee, curated ambience,
+          unforgettable moments.
+        </p>
+        <div class="hero-buttons">
+          <a href="#menu" class="btn btn-primary">
+            <i class="fas fa-book-open"></i> View Menu
+          </a>
+          <a href="#reservation" class="btn btn-outline">
+            <i class="far fa-calendar-alt"></i> Book a Table
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section class="about section-padding" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-images reveal-left">
+            <img
+              src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=600&h=700&fit=crop"
+              alt="The Signature Brew Interior"
+              class="about-img-main"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=300&h=380&fit=crop"
+              alt="Latte Art"
+              class="about-img-float"
+            />
+            <div class="about-experience-badge">
+              <span class="number">5+</span>
+              <span class="label">Years</span>
+            </div>
+          </div>
+          <div class="about-content reveal-right">
+            <div class="section-label">Our Story</div>
+            <h2 class="section-title">
+              A Space Designed for
+              <span class="gradient-text">Beautiful Moments</span>
+            </h2>
+            <p class="about-text">
+              The Signature Brew is more than a café — it's a sanctuary where
+              great coffee meets beautiful moments. Every cup is crafted with
+              passion, and every corner is designed to make you feel relaxed and
+              inspired.
+            </p>
+            <p class="about-text">
+              From the carefully sourced beans to the artful presentation, we
+              believe that coffee is an experience to be savoured, not rushed.
+              Step in, slow down, and let the aroma guide you.
+            </p>
+            <div class="about-features stagger-children">
+              <div class="about-feature reveal" style="--i: 0">
+                <i class="fas fa-seedling"></i>
+                <div>
+                  <h4>Premium Beans</h4>
+                  <p>Ethically sourced from the finest estates worldwide</p>
+                </div>
+              </div>
+              <div class="about-feature reveal" style="--i: 1">
+                <i class="fas fa-mug-hot"></i>
+                <div>
+                  <h4>Expert Baristas</h4>
+                  <p>Award-winning baristas crafting perfection</p>
+                </div>
+              </div>
+              <div class="about-feature reveal" style="--i: 2">
+                <i class="fas fa-couch"></i>
+                <div>
+                  <h4>Luxury Ambience</h4>
+                  <p>Interior designed for comfort and elegance</p>
+                </div>
+              </div>
+              <div class="about-feature reveal" style="--i: 3">
+                <i class="fas fa-heart"></i>
+                <div>
+                  <h4>Made with Love</h4>
+                  <p>Every detail curated with care and passion</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MENU SECTION ==================== -->
+    <section class="menu section-padding" id="menu">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Our Menu</div>
+          <h2 class="section-title">
+            Crafted with <span class="gradient-text">Passion</span>
+          </h2>
+          <p class="section-subtitle">
+            Every item on our menu is a masterpiece — from the first aroma to
+            the last sip.
+          </p>
+        </div>
+
+        <div class="menu-filters reveal">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="coffee">Coffee</button>
+          <button class="filter-btn" data-filter="cold">Cold Coffee</button>
+          <button class="filter-btn" data-filter="snacks">Snacks</button>
+          <button class="filter-btn" data-filter="desserts">Desserts</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+          <!-- Coffee -->
+          <div class="menu-card reveal" data-category="coffee" style="--i: 0">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=300&fit=crop"
+                alt="Espresso"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Coffee</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Classic Espresso</h3>
+              <p class="menu-card-desc">
+                Rich, bold, and full-bodied. The purest expression of coffee.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹149</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="coffee" style="--i: 1">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=300&fit=crop"
+                alt="Cappuccino"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Coffee</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Cappuccino</h3>
+              <p class="menu-card-desc">
+                Velvety steamed milk with a bold espresso heart. A timeless
+                classic.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹199</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="coffee" style="--i: 2">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&h=300&fit=crop"
+                alt="Americano"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Coffee</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Americano</h3>
+              <p class="menu-card-desc">
+                Smooth and balanced. Hot water over rich espresso shots.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹179</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="coffee" style="--i: 3">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop"
+                alt="Latte"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Coffee</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Café Latte</h3>
+              <p class="menu-card-desc">
+                Silky steamed milk poured over espresso with artful foam.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹219</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cold Coffee -->
+          <div class="menu-card reveal" data-category="cold" style="--i: 0">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=400&h=300&fit=crop"
+                alt="Iced Latte"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Cold</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Iced Latte</h3>
+              <p class="menu-card-desc">
+                Chilled espresso blended with cold milk over ice. Pure
+                refreshment.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹249</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="cold" style="--i: 1">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop&sat=-100"
+                alt="Cold Brew"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Cold</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Cold Brew</h3>
+              <p class="menu-card-desc">
+                Steeped for 20 hours. Smooth, low-acid, naturally sweet.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹279</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="cold" style="--i: 2">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=400&h=300&fit=crop"
+                alt="Frappe"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Cold</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Mocha Frappe</h3>
+              <p class="menu-card-desc">
+                Rich chocolate meets cold coffee, blended with cream and ice.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹299</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="cold" style="--i: 3">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1592663527359-cf6642f54cff?w=400&h=300&fit=crop"
+                alt="Iced Mocha"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Cold</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Iced Mocha</h3>
+              <p class="menu-card-desc">
+                Chocolate syrup, espresso and cold milk — an indulgent treat.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹269</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Snacks -->
+          <div class="menu-card reveal" data-category="snacks" style="--i: 0">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://loveandcheesecake.com/cdn/shop/files/buttercroissant2.jpg?v=1711088930&width=480"
+                alt="Croissant"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Snack</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Butter Croissant</h3>
+              <p class="menu-card-desc">
+                Flaky, golden, perfectly laminated. Baked fresh every morning.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹179</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="snacks" style="--i: 1">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=300&fit=crop"
+                alt="Club Sandwich"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Snack</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Club Sandwich</h3>
+              <p class="menu-card-desc">
+                Triple-stacked with grilled chicken, fresh greens and aioli.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹249</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="snacks" style="--i: 2">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=400&h=300&fit=crop"
+                alt="Bruschetta"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Snack</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Tomato Bruschetta</h3>
+              <p class="menu-card-desc">
+                Crispy ciabatta topped with fresh tomatoes, basil and olive oil.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹199</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desserts -->
+          <div class="menu-card reveal" data-category="desserts" style="--i: 0">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop"
+                alt="Tiramisu"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Dessert</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Classic Tiramisu</h3>
+              <p class="menu-card-desc">
+                Layers of espresso-soaked ladyfingers and mascarpone cream.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹299</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="desserts" style="--i: 1">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=300&fit=crop"
+                alt="Brownie"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Dessert</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">Chocolate Brownie</h3>
+              <p class="menu-card-desc">
+                Dense, fudgy, intensely chocolatey. Served warm with cream.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹199</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card reveal" data-category="desserts" style="--i: 2">
+            <div class="menu-card-img-wrapper">
+              <img
+                src="https://www.oliveandmango.com/images/uploads/2023_12_15_new_york_style_cheesecake_1.jpg"
+                alt="Cheesecake"
+                class="menu-card-img"
+              />
+              <span class="menu-card-category">Dessert</span>
+            </div>
+            <div class="menu-card-body">
+              <h3 class="menu-card-name">NY Cheesecake</h3>
+              <p class="menu-card-desc">
+                Creamy, tangy, with a buttery graham crust. Pure elegance.
+              </p>
+              <div class="menu-card-footer">
+                <span class="menu-card-price">₹279</span>
+                <span class="menu-card-order"><i class="fas fa-plus"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SIGNATURE DRINKS ==================== -->
+    <section class="signature section-padding" id="signature">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Signature Collection</div>
+          <h2 class="section-title">
+            Our <span class="gradient-text">Masterpieces</span>
+          </h2>
+          <p class="section-subtitle">
+            Exclusive creations you won't find anywhere else — the soul of The
+            Signature Brew.
+          </p>
+        </div>
+
+        <div class="signature-grid stagger-children">
+          <div class="signature-card reveal" style="--i: 0">
+            <img
+              src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&h=500&fit=crop"
+              alt="The Signature Latte"
+            />
+            <div class="signature-card-overlay">
+              <span class="signature-card-name"> The Signature Latte</span>
+              <span class="signature-card-desc"
+                >Our house special with vanilla and caramel</span
+              >
+              <span class="signature-card-price">₹349</span>
+            </div>
+          </div>
+          <div class="signature-card reveal" style="--i: 1">
+            <img
+              src="https://midwestniceblog.com/wp-content/uploads/2021/04/salted-caramel-cold-foam-cold-brew-coffee-recipe-scaled.jpg"
+              alt="Caramel Cold Brew"
+            />
+            <div class="signature-card-overlay">
+              <span class="signature-card-name">Caramel Cold Brew</span>
+              <span class="signature-card-desc"
+                >20-hour steeped brew with salted caramel</span
+              >
+              <span class="signature-card-price">₹329</span>
+            </div>
+          </div>
+          <div class="signature-card reveal" style="--i: 2">
+            <img
+              src="https://i.pinimg.com/736x/09/be/49/09be49a7b5b97b4790afefee472e1135.jpg"
+              alt="Hazelnut Cappuccino"
+            />
+            <div class="signature-card-overlay">
+              <span class="signature-card-name">Hazelnut Cappuccino</span>
+              <span class="signature-card-desc"
+                >Toasted hazelnut infused into every sip</span
+              >
+              <span class="signature-card-price">₹299</span>
+            </div>
+          </div>
+          <div class="signature-card reveal" style="--i: 3">
+            <img
+              src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=400&h=500&fit=crop"
+              alt="Chocolate Frappe"
+            />
+            <div class="signature-card-overlay">
+              <span class="signature-card-name">Chocolate Frappe</span>
+              <span class="signature-card-desc"
+                >Belgian chocolate blended with espresso and cream</span
+              >
+              <span class="signature-card-price">₹319</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== AI DRINK RECOMMENDER ==================== -->
+    <section class="recommender section-padding" id="recommender">
+      <div class="container">
+        <div class="recommender-box reveal">
+          <h2 class="recommender-title">✨ Help Me Choose My Drink</h2>
+          <p class="recommender-subtitle">
+            Tell us your mood, and we'll find the perfect drink for you.
+          </p>
+
+          <div class="preference-grid" id="prefGrid">
+            <button
+              class="pref-btn"
+              data-pref="sweet"
+              onclick="selectPref(this)"
+            >
+              <i class="fas fa-candy-cane"></i> Sweet
+            </button>
+            <button
+              class="pref-btn"
+              data-pref="strong"
+              onclick="selectPref(this)"
+            >
+              <i class="fas fa-bolt"></i> Strong
+            </button>
+            <button
+              class="pref-btn"
+              data-pref="chocolate"
+              onclick="selectPref(this)"
+            >
+              <i class="fas fa-cookie-bite"></i> Chocolate
+            </button>
+            <button
+              class="pref-btn"
+              data-pref="cold"
+              onclick="selectPref(this)"
+            >
+              <i class="fas fa-snowflake"></i> Cold
+            </button>
+            <button
+              class="pref-btn"
+              data-pref="fruity"
+              onclick="selectPref(this)"
+            >
+              <i class="fas fa-lemon"></i> Fruity
+            </button>
+            <button
+              class="pref-btn"
+              data-pref="classic"
+              onclick="selectPref(this)"
+            >
+              <i class="fas fa-crown"></i> Classic
+            </button>
+          </div>
+
+          <div class="recommend-result" id="recommendResult">
+            <p>We recommend</p>
+            <h3 class="drink-name" id="drinkName"></h3>
+            <p id="drinkDesc"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GALLERY ==================== -->
+    <section class="gallery section-padding" id="gallery">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Gallery</div>
+          <h2 class="section-title">
+            Inside <span class="gradient-text">The Signature Brew</span>
+          </h2>
+          <p class="section-subtitle">
+            A glimpse into our world of coffee, craft and comfort.
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=600&h=800&fit=crop"
+              alt="Café Interior"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop"
+              alt="Coffee Top View"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop"
+              alt="Coffee Top View"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop"
+              alt="Coffee Top View"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop"
+              alt="Café Ambience"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&h=400&fit=crop"
+              alt="Coffee & Pastry"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&h=400&fit=crop"
+              alt="Coffee & Pastry"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=400&fit=crop"
+              alt="Café Seating"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRilcxYZunkXUh0i9B5SkIg6Hsj18vf5ZUr9A&s"
+              alt="Coffee Beans"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&h=400&fit=crop"
+              alt="Pour Over Coffee"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+          <div class="gallery-item reveal" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=400&h=400&fit=crop"
+              alt="Café Details"
+            />
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <button class="lightbox-close"><i class="fas fa-times"></i></button>
+      <img src="" alt="Gallery Preview" id="lightboxImg" />
+    </div>
+
+    <!-- ==================== POPULAR TODAY ==================== -->
+    <section class="popular section-padding" id="popular">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">🔥 Trending</div>
+          <h2 class="section-title">
+            Popular <span class="gradient-text">Today</span>
+          </h2>
+          <p class="section-subtitle">
+            Discover what everyone's loving right now at The Signature Brew.
+          </p>
+        </div>
+
+        <div class="popular-grid stagger-children">
+          <div class="popular-card reveal" style="--i: 0">
+            <img
+              src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=300&h=300&fit=crop"
+              alt="Caramel Latte"
+            />
+            <h3>Caramel Latte</h3>
+            <p>Sweet, velvety, and perfectly balanced with caramel drizzle.</p>
+            <span class="price">₹289</span>
+          </div>
+          <div class="popular-card reveal" style="--i: 1">
+            <img
+              src="https://i.pinimg.com/736x/09/be/49/09be49a7b5b97b4790afefee472e1135.jpg"
+              alt="Hazelnut Cappuccino"
+            />
+            <h3>Hazelnut Cappuccino</h3>
+            <p>Toasted hazelnut aroma meets rich espresso perfection.</p>
+            <span class="price">₹299</span>
+          </div>
+          <div class="popular-card reveal" style="--i: 2">
+            <img
+              src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=300&h=300&fit=crop"
+              alt="Chocolate Brownie"
+            />
+            <h3>Chocolate Brownie</h3>
+            <p>
+              Dense, fudgy, intensely chocolatey. Served warm with ice cream.
+            </p>
+            <span class="price">₹199</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CAFE GROWTH ==================== -->
+    <section class="growth section-padding" id="growth">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Why Choose Us</div>
+          <h2 class="section-title">
+            Elevate Your <span class="gradient-text">Café Experience</span>
+          </h2>
+          <p class="section-subtitle">
+            A premium digital presence that helps your café grow, attract, and
+            convert.
+          </p>
+        </div>
+
+        <div class="growth-grid stagger-children">
+          <div class="growth-card reveal" style="--i: 0">
+            <div class="growth-icon"><i class="fas fa-users"></i></div>
+            <h3>More Customers</h3>
+            <p>
+              People searching online can easily discover your café. A premium
+              website drives foot traffic and builds trust instantly.
+            </p>
+          </div>
+          <div class="growth-card reveal" style="--i: 1">
+            <div class="growth-icon"><i class="fas fa-calendar-check"></i></div>
+            <h3>Online Reservations</h3>
+            <p>
+              Customers can book tables before arriving. No phone calls, no
+              waiting — just seamless bookings.
+            </p>
+          </div>
+          <div class="growth-card reveal" style="--i: 2">
+            <div class="growth-icon"><i class="fas fa-gem"></i></div>
+            <h3>Premium Brand Image</h3>
+            <p>
+              A high-end website makes your café look more professional, upscale
+              and attractive to new visitors.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <section class="testimonials section-padding" id="reviews">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Testimonials</div>
+          <h2 class="section-title">
+            What Our Guests <span class="gradient-text">Say</span>
+          </h2>
+          <p class="section-subtitle">
+            Real stories from real people who fell in love with The Signature
+            Brew.
+          </p>
+        </div>
+
+        <div class="testimonial-track-wrapper reveal">
+          <div class="testimonial-track" id="testimonialTrack">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "The ambience is absolutely breathtaking. Every corner is
+                Instagram-worthy and the coffee is hands-down the best I've had
+                in the city. The Signature Brew is my happy place!"
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">A</div>
+                <div>
+                  <div class="testimonial-name">Ananya Sharma</div>
+                  <div class="testimonial-role">Food Blogger</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "I brought a client here for a meeting and they were so
+                impressed with the place. The Signature Latte is divine. This is
+                not just a café — it's an experience."
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">R</div>
+                <div>
+                  <div class="testimonial-name">Rahul Mehta</div>
+                  <div class="testimonial-role">Entrepreneur</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "From the moment you walk in, you feel special. The staff is
+                incredibly warm, the desserts are heavenly and the Hazelnut
+                Cappuccino is a masterpiece."
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">P</div>
+                <div>
+                  <div class="testimonial-name">Priya Patel</div>
+                  <div class="testimonial-role">Interior Designer</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "Perfect spot for remote work. Fast WiFi, amazing coffee,
+                comfortable seating and the softest jazz playing in the
+                background. I've practically moved in!"
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">V</div>
+                <div>
+                  <div class="testimonial-name">Vikram Singh</div>
+                  <div class="testimonial-role">Software Developer</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "We celebrated our anniversary here and the team made it so
+                special. The Tiramisu was the best I've ever had. Already
+                planning our next visit!"
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">M</div>
+                <div>
+                  <div class="testimonial-name">Meera & Arjun</div>
+                  <div class="testimonial-role">Regular Guests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-nav reveal">
+          <button onclick="moveTestimonials(-1)">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button onclick="moveTestimonials(1)">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RESERVATION ==================== -->
+    <section class="reservation section-padding" id="reservation">
+      <div class="container">
+        <div class="reservation-grid">
+          <div class="reservation-image reveal-left">
+            <img
+              src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=800&fit=crop"
+              alt="Cafe Interior"
+            />
+            <div class="reservation-image-overlay">
+              <h3>Reserve Your Experience</h3>
+              <p>
+                Secure your table and let us prepare a perfect welcome for you.
+              </p>
+            </div>
+          </div>
+
+          <div class="reservation-form-wrapper reveal-right">
+            <div class="section-label">Reservation</div>
+            <h2>Book a <span class="gradient-text">Table</span></h2>
+            <p>
+              Fill in your details and we'll have everything ready for your
+              arrival.
+            </p>
+
+            <form id="reservationForm" onsubmit="submitReservation(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Your Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="john@example.com"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="+91 12345 67890"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Guests</label>
+                  <select name="guests" required>
+                    <option value="">Select</option>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 People</option>
+                    <option value="3">3 People</option>
+                    <option value="4">4 People</option>
+                    <option value="5">5 People</option>
+                    <option value="6+">6+ People</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Date</label>
+                  <input type="date" name="date" required />
+                </div>
+                <div class="form-group">
+                  <label>Time</label>
+                  <input type="time" name="time" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Special Requests</label>
+                <textarea
+                  name="requests"
+                  placeholder="Birthday setup, window seat, dietary needs..."
+                ></textarea>
+              </div>
+              <button type="submit" class="submit-btn">
+                <i class="fas fa-calendar-check"></i> &nbsp; Confirm Reservation
+              </button>
+            </form>
+
+            <div class="form-success" id="formSuccess">
+              <i class="fas fa-check-circle"></i>
+              <h3>Reservation Confirmed!</h3>
+              <p>
+                Thank you! We'll send you a confirmation email shortly. See you
+                at The Signature Brew! ☕
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GOOGLE MAP ==================== -->
+    <section class="map-section" id="location">
+      <div class="map-header">
+        <div class="section-label reveal">Find Us</div>
+        <h2 class="section-title reveal">
+          Visit <span class="gradient-text">The Signature Brew</span>
+        </h2>
+      </div>
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12719.553630285196!2d73.16320267813174!3d22.31241206662415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc8ba10bd9a53%3A0x8d7e1b0e192f5bda!2sThe%20Signature%20Brew!5e0!3m2!1sen!2sin!4v1772968558704!5m2!1sen!2sin"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+        <div class="map-overlay-card">
+          <h3><i class="fas fa-mug-hot"></i> The Signature Brew</h3>
+          <p>
+            <i class="fas fa-map-marker-alt"></i> 83 /A हाई विद्यालय, Alkapuri,
+            Vadodara, Gujarat 390007
+          </p>
+          <p style="margin-top: 8px">
+            <i class="fas fa-clock"></i> Open Daily: 8:00 AM – 11:00 PM
+          </p>
+          <p style="margin-top: 8px">
+            <i class="fas fa-phone"></i> +91 81412 87148
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== INSTAGRAM ==================== -->
+    <section class="instagram section-padding" id="instagram">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Follow Us</div>
+          <h2 class="section-title">
+            <span class="gradient-text">@cafesignaturebrew</span> on Instagram
+          </h2>
+        </div>
+        <div class="insta-grid">
+          <div class="insta-item reveal">
+            <img
+              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=300&h=300&fit=crop"
+              alt="Instagram"
+            />
+            <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+          </div>
+          <div class="insta-item reveal">
+            <img
+              src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=300&h=300&fit=crop"
+              alt="Instagram"
+            />
+            <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+          </div>
+          <div class="insta-item reveal">
+            <img
+              src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300&h=300&fit=crop"
+              alt="Instagram"
+            />
+            <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+          </div>
+          <div class="insta-item reveal">
+            <img
+              src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300&h=300&fit=crop"
+              alt="Instagram"
+            />
+            <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+          </div>
+          <div class="insta-item reveal">
+            <img
+              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=300&h=300&fit=crop"
+              alt="Instagram"
+            />
+            <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+          </div>
+          <div class="insta-item reveal">
+            <img
+              src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=300&h=300&fit=crop"
+              alt="Instagram"
+            />
+            <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section class="contact section-padding" id="contact">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Get in Touch</div>
+          <h2 class="section-title">
+            Contact <span class="gradient-text">Us</span>
+          </h2>
+        </div>
+        <div class="contact-grid stagger-children">
+          <div class="contact-card reveal" style="--i: 0">
+            <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+            <h3>Call Us</h3>
+            <p><a href="tel:+91 81412 87148">+91 81412 87148</a></p>
+            <p><a href="tel:+91 81412 87148">+91 81412 87148</a></p>
+          </div>
+          <div class="contact-card reveal" style="--i: 1">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <h3>Email Us</h3>
+            <p>
+              <a href="mailto:hello@cafesignaturebrew.in"
+                >hello@cafesignaturebrew.in</a
+              >
+            </p>
+            <p>
+              <a href="mailto:reservations@cafesignaturebrew.in"
+                >reservations@cafesignaturebrew.in</a
+              >
+            </p>
+          </div>
+          <div class="contact-card reveal" style="--i: 2">
+            <div class="contact-icon"><i class="fas fa-clock"></i></div>
+            <h3>Opening Hours</h3>
+            <p>Mon – Fri: 8:00 AM – 12:00 AM</p>
+            <p>Sat – Sun: 9:00 AM – 12:00 AM</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" class="nav-logo"
+              ><i class="fas fa-mug-hot"></i> The Signature Brew
+            </a>
+            <p>
+              Where every sip tells a story. Premium coffee, curated ambience,
+              and unforgettable moments — all under one roof.
+            </p>
+            <div class="footer-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#menu">Our Menu</a></li>
+              <li><a href="#gallery">Gallery</a></li>
+              <li><a href="#reviews">Reviews</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Menu</h4>
+            <ul>
+              <li><a href="#menu">Coffee</a></li>
+              <li><a href="#menu">Cold Coffee</a></li>
+              <li><a href="#menu">Snacks</a></li>
+              <li><a href="#menu">Desserts</a></li>
+              <li><a href="#signature">Signature Drinks</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li>
+                <a href="tel:+9181412 87148"
+                  ><i
+                    class="fas fa-phone-alt"
+                    style="
+                      color: var(--gold);
+                      margin-right: 8px;
+                      font-size: 0.75rem;
+                    "
+                  ></i
+                  >+91 81412 87148</a
+                >
+              </li>
+              <li>
+                <a href="mailto:hello@cafesignaturebrew.in"
+                  ><i
+                    class="fas fa-envelope"
+                    style="
+                      color: var(--gold);
+                      margin-right: 8px;
+                      font-size: 0.75rem;
+                    "
+                  ></i
+                  >hello@cafesignaturebrew.in</a
+                >
+              </li>
+              <li>
+                <a href="#location"
+                  ><i
+                    class="fas fa-map-marker-alt"
+                    style="
+                      color: var(--gold);
+                      margin-right: 8px;
+                      font-size: 0.75rem;
+                    "
+                  ></i
+                  >Alkapuri, Vadodara</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2024 <a href="#">The Signature Brew</a>. All rights reserved.</p>
+          <p>
+            Crafted with
+            <i class="fas fa-heart" style="color: var(--gold)"></i> for coffee
+            lovers
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==================== FLOATING RESERVE BUTTON ==================== -->
+    <button
+      class="floating-btn"
+      id="floatingBtn"
+      onclick="scrollToReservation()"
+    >
+      <i class="far fa-calendar-alt"></i> Reserve Table
+    </button>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+      /* ========================================
+           PRELOADER
+        ======================================== */
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("preloader").classList.add("hidden");
+          animateHeroContent();
+        }, 2200);
+      });
+
+      /* ========================================
+           THREE.JS - 3D COFFEE CUP HERO
+        ======================================== */
+      (function initThreeScene() {
+        const canvas = document.getElementById("hero-canvas");
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+          45,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000,
+        );
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: true,
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+
+        // Cup Group
+        const cupGroup = new THREE.Group();
+
+        // Materials
+        const ceramicMat = new THREE.MeshStandardMaterial({
+          color: 0xf0e6d3,
+          roughness: 0.25,
+          metalness: 0.05,
+        });
+        const coffeeMat = new THREE.MeshStandardMaterial({
+          color: 0x2a1408,
+          roughness: 0.1,
+          metalness: 0.3,
+        });
+        const saucerMat = new THREE.MeshStandardMaterial({
+          color: 0xf0e6d3,
+          roughness: 0.2,
+          metalness: 0.05,
+        });
+
+        // Cup body using LatheGeometry
+        const cupProfile = [
+          new THREE.Vector2(0.001, 0),
+          new THREE.Vector2(0.55, 0),
+          new THREE.Vector2(0.52, 0.04),
+          new THREE.Vector2(0.48, 0.15),
+          new THREE.Vector2(0.47, 0.5),
+          new THREE.Vector2(0.5, 0.9),
+          new THREE.Vector2(0.58, 1.2),
+          new THREE.Vector2(0.64, 1.38),
+          new THREE.Vector2(0.67, 1.42),
+          new THREE.Vector2(0.68, 1.45),
+          new THREE.Vector2(0.66, 1.48),
+          new THREE.Vector2(0.62, 1.45),
+          new THREE.Vector2(0.56, 1.35),
+          new THREE.Vector2(0.49, 1.1),
+          new THREE.Vector2(0.44, 0.7),
+          new THREE.Vector2(0.42, 0.3),
+          new THREE.Vector2(0.44, 0.1),
+          new THREE.Vector2(0.001, 0.08),
+        ];
+        const cupGeo = new THREE.LatheGeometry(cupProfile, 48);
+        const cup = new THREE.Mesh(cupGeo, ceramicMat);
+        cupGroup.add(cup);
+
+        // Coffee surface
+        const coffeeGeo = new THREE.CircleGeometry(0.56, 48);
+        const coffeeSurface = new THREE.Mesh(coffeeGeo, coffeeMat);
+        coffeeSurface.rotation.x = -Math.PI / 2;
+        coffeeSurface.position.y = 1.36;
+        cupGroup.add(coffeeSurface);
+
+        // Handle
+        const handleGeo = new THREE.TorusGeometry(
+          0.22,
+          0.05,
+          12,
+          24,
+          Math.PI * 1.1,
+        );
+        const handle = new THREE.Mesh(handleGeo, ceramicMat);
+        handle.position.set(0.68, 0.85, 0);
+        handle.rotation.z = -Math.PI * 0.05;
+        handle.rotation.y = Math.PI / 2;
+        cupGroup.add(handle);
+
+        // Saucer
+        const saucerProfile = [
+          new THREE.Vector2(0.001, 0),
+          new THREE.Vector2(0.35, 0),
+          new THREE.Vector2(0.35, 0.03),
+          new THREE.Vector2(0.4, 0.04),
+          new THREE.Vector2(0.7, 0.05),
+          new THREE.Vector2(0.95, 0.08),
+          new THREE.Vector2(1.0, 0.1),
+          new THREE.Vector2(1.0, 0.06),
+          new THREE.Vector2(0.95, 0.03),
+          new THREE.Vector2(0.7, 0.0),
+          new THREE.Vector2(0.4, -0.02),
+          new THREE.Vector2(0.001, -0.02),
+        ];
+        const saucerGeo = new THREE.LatheGeometry(saucerProfile, 48);
+        const saucer = new THREE.Mesh(saucerGeo, saucerMat);
+        saucer.position.y = -0.04;
+        cupGroup.add(saucer);
+
+        cupGroup.position.set(2.2, -1.2, 0);
+        cupGroup.rotation.y = -0.5;
+        scene.add(cupGroup);
+
+        // Steam particles
+        const steamCount = 80;
+        const steamPositions = new Float32Array(steamCount * 3);
+        const steamVelocities = [];
+        for (let i = 0; i < steamCount; i++) {
+          resetSteamParticle(i);
+          steamPositions[i * 3 + 1] = Math.random() * 1.5 + 1.5;
+        }
+        function resetSteamParticle(i) {
+          steamPositions[i * 3] = (Math.random() - 0.5) * 0.4 + 2.2;
+          steamPositions[i * 3 + 1] = 0.3 + Math.random() * 0.3;
+          steamPositions[i * 3 + 2] = (Math.random() - 0.5) * 0.4;
+          steamVelocities[i] = {
+            x: (Math.random() - 0.5) * 0.003,
+            y: 0.005 + Math.random() * 0.008,
+            z: (Math.random() - 0.5) * 0.003,
+            life: 0,
+          };
+        }
+        const steamGeo = new THREE.BufferGeometry();
+        steamGeo.setAttribute(
+          "position",
+          new THREE.BufferAttribute(steamPositions, 3),
+        );
+        const steamMat = new THREE.PointsMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.2,
+          size: 0.06,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        });
+        const steam = new THREE.Points(steamGeo, steamMat);
+        scene.add(steam);
+
+        // Coffee Beans
+        const beans = [];
+        const beanGeo = new THREE.SphereGeometry(0.08, 8, 6);
+        const beanMat = new THREE.MeshStandardMaterial({
+          color: 0x3a1a0a,
+          roughness: 0.8,
+          metalness: 0.1,
+        });
+        for (let i = 0; i < 12; i++) {
+          const bean = new THREE.Mesh(beanGeo, beanMat);
+          bean.scale.set(1, 0.6, 0.65);
+          const angle = Math.random() * Math.PI * 2;
+          const radius = 2.5 + Math.random() * 2;
+          bean.position.set(
+            Math.cos(angle) * radius,
+            (Math.random() - 0.5) * 3,
+            Math.sin(angle) * radius - 2,
+          );
+          bean.rotation.set(
+            Math.random() * Math.PI,
+            Math.random() * Math.PI,
+            Math.random() * Math.PI,
+          );
+          bean.userData = {
+            speed: 0.002 + Math.random() * 0.004,
+            rotSpeed: {
+              x: (Math.random() - 0.5) * 0.02,
+              y: (Math.random() - 0.5) * 0.02,
+              z: (Math.random() - 0.5) * 0.02,
+            },
+            floatOffset: Math.random() * Math.PI * 2,
+            floatSpeed: 0.5 + Math.random() * 0.5,
+            floatAmplitude: 0.2 + Math.random() * 0.3,
+          };
+          scene.add(bean);
+          beans.push(bean);
+        }
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xfff5e6, 0.3);
+        scene.add(ambientLight);
+
+        const keyLight = new THREE.PointLight(0xffdaa0, 1.5, 20);
+        keyLight.position.set(3, 4, 3);
+        scene.add(keyLight);
+
+        const fillLight = new THREE.PointLight(0xc8a97e, 0.6, 15);
+        fillLight.position.set(-3, 2, -2);
+        scene.add(fillLight);
+
+        const rimLight = new THREE.PointLight(0xffffff, 0.4, 15);
+        rimLight.position.set(-2, 3, 4);
+        scene.add(rimLight);
+
+        const spotLight = new THREE.SpotLight(
+          0xffdaa0,
+          0.8,
+          15,
+          Math.PI / 6,
+          0.5,
+        );
+        spotLight.position.set(0, 5, 2);
+        spotLight.target = cup;
+        scene.add(spotLight);
+
+        camera.position.set(0, 1.5, 5.5);
+        camera.lookAt(1, 0.5, 0);
+
+        // Mouse interaction
+        let mouseX = 0,
+          mouseY = 0;
+        document.addEventListener("mousemove", (e) => {
+          mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+          mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        // Animation loop
+        const clock = new THREE.Clock();
+        function animate() {
+          requestAnimationFrame(animate);
+          const elapsed = clock.getElapsedTime();
+
+          // Cup gentle rotation
+          cupGroup.rotation.y = -0.5 + Math.sin(elapsed * 0.3) * 0.15;
+          cupGroup.position.y = -1.2 + Math.sin(elapsed * 0.5) * 0.05;
+
+          // Camera parallax
+          camera.position.x = 0 + mouseX * 0.3;
+          camera.position.y = 1.5 + mouseY * -0.2;
+          camera.lookAt(1, 0.5, 0);
+
+          // Steam animation
+          const positions = steam.geometry.attributes.position.array;
+          for (let i = 0; i < steamCount; i++) {
+            const v = steamVelocities[i];
+            positions[i * 3] += v.x + Math.sin(elapsed + i) * 0.001;
+            positions[i * 3 + 1] += v.y;
+            positions[i * 3 + 2] += v.z + Math.cos(elapsed + i) * 0.001;
+            v.life += 0.01;
+            if (positions[i * 3 + 1] > 3 || v.life > 1) {
+              resetSteamParticle(i);
+            }
+          }
+          steam.geometry.attributes.position.needsUpdate = true;
+          steamMat.opacity = 0.15 + Math.sin(elapsed) * 0.05;
+
+          // Beans floating
+          beans.forEach((bean) => {
+            const d = bean.userData;
+            bean.position.y +=
+              Math.sin(elapsed * d.floatSpeed + d.floatOffset) * 0.002;
+            bean.rotation.x += d.rotSpeed.x;
+            bean.rotation.y += d.rotSpeed.y;
+            bean.rotation.z += d.rotSpeed.z;
+          });
+
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        // Resize
+        window.addEventListener("resize", () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+      })();
+
+      /* ========================================
+           FLOATING PARTICLES (CSS)
+        ======================================== */
+      (function createParticles() {
+        const container = document.getElementById("heroParticles");
+        for (let i = 0; i < 20; i++) {
+          const p = document.createElement("div");
+          p.classList.add("particle");
+          const size = Math.random() * 4 + 2;
+          p.style.width = size + "px";
+          p.style.height = size + "px";
+          p.style.left = Math.random() * 100 + "%";
+          p.style.animationDuration = 8 + Math.random() * 15 + "s";
+          p.style.animationDelay = Math.random() * 10 + "s";
+          container.appendChild(p);
+        }
+      })();
+
+      /* ========================================
+           HERO CONTENT ANIMATION
+        ======================================== */
+      function animateHeroContent() {
+        const tl = gsap.timeline();
+        tl.from(".hero-badge", {
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: "power3.out",
+        })
+          .from(
+            ".hero-title",
+            { opacity: 0, y: 50, duration: 1, ease: "power3.out" },
+            "-=0.4",
+          )
+          .from(
+            ".hero-subtitle",
+            { opacity: 0, y: 30, duration: 0.8, ease: "power3.out" },
+            "-=0.5",
+          )
+          .from(
+            ".hero-buttons .btn",
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+              stagger: 0.15,
+              ease: "power3.out",
+            },
+            "-=0.4",
+          )
+          .from(
+            ".hero-scroll-indicator",
+            { opacity: 0, duration: 0.8 },
+            "-=0.2",
+          );
+      }
+
+      /* ========================================
+           NAVBAR SCROLL EFFECT
+        ======================================== */
+      const navbar = document.getElementById("navbar");
+      const floatingBtn = document.getElementById("floatingBtn");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 100) {
+          navbar.classList.add("scrolled");
+          floatingBtn.style.opacity = "1";
+          floatingBtn.style.transform = "translateY(0)";
+        } else {
+          navbar.classList.remove("scrolled");
+          floatingBtn.style.opacity = "0";
+          floatingBtn.style.transform = "translateY(20px)";
+        }
+      });
+      floatingBtn.style.opacity = "0";
+      floatingBtn.style.transform = "translateY(20px)";
+      floatingBtn.style.transition = "all 0.4s ease";
+
+      /* ========================================
+           MOBILE MENU
+        ======================================== */
+      function toggleMobile() {
+        document.getElementById("hamburger").classList.toggle("active");
+        document.getElementById("mobileMenu").classList.toggle("active");
+      }
+
+      /* ========================================
+           SCROLL REVEAL ANIMATIONS
+        ======================================== */
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Generic reveal
+      document.querySelectorAll(".reveal").forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+            delay: parseFloat(el.style.getPropertyValue("--i") || 0) * 0.12,
+          },
+        );
+      });
+
+      // Left reveal
+      document.querySelectorAll(".reveal-left").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: -80 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 85%" },
+          },
+        );
+      });
+
+      // Right reveal
+      document.querySelectorAll(".reveal-right").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 80 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 85%" },
+          },
+        );
+      });
+
+      // Parallax effects for sections
+      gsap.utils.toArray(".section-padding").forEach((section) => {
+        gsap.fromTo(
+          section.querySelector(".section-header"),
+          { y: 30 },
+          {
+            y: -20,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          },
+        );
+      });
+
+      /* ========================================
+           MENU FILTER
+        ======================================== */
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const filter = btn.dataset.filter;
+          document.querySelectorAll(".menu-card").forEach((card) => {
+            if (filter === "all" || card.dataset.category === filter) {
+              card.classList.remove("hidden-card");
+              gsap.fromTo(
+                card,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+              );
+            } else {
+              card.classList.add("hidden-card");
+            }
+          });
+        });
+      });
+
+      /* ========================================
+           AI DRINK RECOMMENDER
+        ======================================== */
+      const drinkDB = {
+        sweet: {
+          name: "Caramel Latte",
+          desc: "A velvety latte kissed with rich caramel — sweet, smooth, and utterly satisfying. ₹289",
+        },
+        strong: {
+          name: "Double Espresso",
+          desc: "Bold, intense, and uncompromising. Two shots of our finest beans. ₹179",
+        },
+        chocolate: {
+          name: "Chocolate Frappe",
+          desc: "Belgian chocolate meets cold espresso in a creamy, blended indulgence. ₹319",
+        },
+        cold: {
+          name: "Iced Cold Brew",
+          desc: "Steeped for 20 hours, served over ice. Smooth, refreshing, naturally sweet. ₹279",
+        },
+        fruity: {
+          name: "Berry Bliss Smoothie",
+          desc: "Mixed berries blended with yogurt and a hint of honey. Light and refreshing. ₹259",
+        },
+        classic: {
+          name: "Hazelnut Cappuccino",
+          desc: "Timeless cappuccino elevated with toasted hazelnut aroma. A true classic. ₹299",
+        },
+      };
+
+      function selectPref(btn) {
+        document
+          .querySelectorAll(".pref-btn")
+          .forEach((b) => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        const pref = btn.dataset.pref;
+        const drink = drinkDB[pref];
+        const result = document.getElementById("recommendResult");
+        document.getElementById("drinkName").textContent = drink.name;
+        document.getElementById("drinkDesc").textContent = drink.desc;
+        result.classList.add("active");
+      }
+
+      /* ========================================
+           GALLERY LIGHTBOX
+        ======================================== */
+      function openLightbox(item) {
+        const img = item.querySelector("img");
+        const lb = document.getElementById("lightbox");
+        const lbImg = document.getElementById("lightboxImg");
+        lbImg.src = img.src
+          .replace("w=600", "w=1200")
+          .replace("w=400", "w=1200")
+          .replace("h=800", "h=900")
+          .replace("h=400", "h=900");
+        lb.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function closeLightbox() {
+        document.getElementById("lightbox").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeLightbox();
+      });
+
+      /* ========================================
+           TESTIMONIAL CAROUSEL
+        ======================================== */
+      let testimonialIndex = 0;
+      const track = document.getElementById("testimonialTrack");
+      const cards = track.querySelectorAll(".testimonial-card");
+      let cardsPerView = 3;
+
+      function updateCardsPerView() {
+        if (window.innerWidth <= 768) cardsPerView = 1;
+        else if (window.innerWidth <= 1024) cardsPerView = 2;
+        else cardsPerView = 3;
+      }
+      updateCardsPerView();
+      window.addEventListener("resize", updateCardsPerView);
+
+      function moveTestimonials(dir) {
+        updateCardsPerView();
+        const maxIndex = cards.length - cardsPerView;
+        testimonialIndex += dir;
+        if (testimonialIndex < 0) testimonialIndex = maxIndex;
+        if (testimonialIndex > maxIndex) testimonialIndex = 0;
+        const cardWidth = cards[0].offsetWidth + 30;
+        track.style.transform = `translateX(-${testimonialIndex * cardWidth}px)`;
+      }
+
+      // Auto-play
+      setInterval(() => moveTestimonials(1), 5000);
+
+      /* ========================================
+           RESERVATION FORM
+        ======================================== */
+      function submitReservation(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        const obj = Object.fromEntries(data.entries());
+
+        // Send to backend (when Node.js server is running)
+        fetch("/api/reserve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(obj),
+        })
+          .then((r) => r.json())
+          .then((d) => {
+            /* success handled below */
+          })
+          .catch(() => {
+            /* offline fallback */
+          });
+
+        // Show success message
+        form.style.display = "none";
+        document.getElementById("formSuccess").classList.add("active");
+
+        // Reset after 5 seconds
+        setTimeout(() => {
+          form.style.display = "block";
+          document.getElementById("formSuccess").classList.remove("active");
+          form.reset();
+        }, 6000);
+      }
+
+      function scrollToReservation() {
+        document
+          .getElementById("reservation")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      /* ========================================
+           SET MIN DATE FOR RESERVATION
+        ======================================== */
+      (function () {
+        const dateInput = document.querySelector('input[name="date"]');
+        if (dateInput) {
+          const today = new Date().toISOString().split("T")[0];
+          dateInput.setAttribute("min", today);
+        }
+      })();
+
+      /* ========================================
+           SMOOTH SCROLL FOR NAV LINKS
+        ======================================== */
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
