@@ -108,7 +108,7 @@ app.post('/api/reserve', async (req, res) => {
         // Email to owner
         await resend.emails.send({
             from: 'onboarding@resend.dev',
-            to: 'darshilvalera69@gmail.com',
+            to: 'darshilvalera@gmail.com',
             subject: `🍽️ New Table Reservation – The Signature Brew`,
             html: ownerHTML
         });
