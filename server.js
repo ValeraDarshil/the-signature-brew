@@ -24,10 +24,12 @@ app.use(express.static(path.join(__dirname, 'public'))); // Put your HTML file i
 
 // ---- CONFIGURE YOUR EMAIL CREDENTIALS ----
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // or 'outlook', 'yahoo', etc.
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
-        user: process.env.EMAIL,       // ← Replace with your email
-        pass: process.env.EMAIL_PASS            // ← Replace with App Password (not regular password)
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS
     }
 });
 
