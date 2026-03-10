@@ -1,143 +1,195 @@
-// =====================================================
-// -The Signature Brew Reservation Email Backend
-// =====================================================
-// Setup:
-//   1. npm init -y
-//   2. npm install express cors nodemailer
-//   3. Update SMTP credentials below
-//   4. node server.js
-// =====================================================
+require("dotenv").config();
 
-const express = require('express');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
-const path = require('path');
+const express = require("express");
+const cors = require("cors");
+const nodemailer = require("nodemailer");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Put your HTML file in /public
+app.use(express.static(path.join(__dirname, "public")));
 
-// ---- CONFIGURE YOUR EMAIL CREDENTIALS ----
+
+// Email Transporter
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // or 'outlook', 'yahoo', etc.
-    auth: {
-        user: process.env.EMAIL,       // ← Replace with your email
-        pass: process.env.EMAIL_PASSWORD            // ← Replace with App Password (not regular password)
-    }
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASS
+  }
 });
 
-// Reservation endpoint
-app.post('/api/reserve', async (req, res) => {
-    const { name, email, phone, guests, date, time, requests } = req.body;
 
-    // Validate
-    if (!name || !email || !phone || !guests || !date || !time) {
-        return res.status(400).json({ error: 'All fields are required.' });
-    }
+// Reservation API
+app.post("/api/reserve", async (req, res) => {
 
-    // Format date
-    const formattedDate = new Date(date).toLocaleDateString('en-IN', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  const { name, email, phone, guests, date, time, requests } = req.body;
+
+  if (!name || !email || !phone || !guests || !date || !time) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  const formattedDate = new Date(date).toLocaleDateString("en-IN", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+
+  try {
+
+    // OWNER EMAIL
+    await transporter.sendMail({
+      from: `"The Signature Brew Cafe" <${process.env.EMAIL}>`,
+      to: process.env.OWNER_EMAIL,
+      subject: "☕ New Cafe Reservation",
+      html: `
+
+<div style="background:#f4f4f4;padding:30px;font-family:Arial">
+
+<div style="max-width:600px;margin:auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,0.15)">
+
+<div style="background:#6b3e26;color:white;padding:25px;text-align:center">
+<h2>☕ New Reservation</h2>
+<p>The Signature Brew Cafe</p>
+</div>
+
+<div style="padding:25px">
+
+<h3 style="margin-bottom:20px;color:#333">Reservation Details</h3>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px">
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Name</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${name}</td>
+</tr>
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Email</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${email}</td>
+</tr>
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Phone</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${phone}</td>
+</tr>
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Guests</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${guests}</td>
+</tr>
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Date</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${formattedDate}</td>
+</tr>
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Time</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${time}</td>
+</tr>
+
+<tr>
+<td style="padding:10px"><b>Special Request</b></td>
+<td style="padding:10px">${requests || "None"}</td>
+</tr>
+
+</table>
+
+</div>
+
+<div style="background:#fafafa;padding:15px;text-align:center;font-size:12px;color:#777">
+The Signature Brew Cafe Reservation System
+</div>
+
+</div>
+</div>
+
+`
     });
 
-    // Email to café owner
-    const ownerMailOptions = {
-        from: '"The Signature Brew Website" <manavvalera05@gmail.com>',
-        to: 'manavvalera69@gmail.com',  // ← Replace with café owner's email
-        subject: `🍽️ New Table Reservation – The Signature Brew `,
-        html: `
-            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#1a1412;color:#f5e6d3;border-radius:16px;overflow:hidden;">
-                <div style="background:linear-gradient(135deg,#c8a97e,#8a6d3b);padding:30px;text-align:center;">
-                    <h1 style="margin:0;color:#0a0908;font-size:24px;">☕ New Reservation</h1>
-                    <p style="margin:5px 0 0;color:#0a0908;opacity:0.8;">The Signature Brew — Table Booking</p>
-                </div>
-                <div style="padding:30px;">
-                    <table style="width:100%;border-collapse:collapse;">
-                        <tr>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#c8a97e;width:140px;">👤 Name</td>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#f5e6d3;">${name}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#c8a97e;">📧 Email</td>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#f5e6d3;">${email}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#c8a97e;">📱 Phone</td>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#f5e6d3;">${phone}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#c8a97e;">👥 Guests</td>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#f5e6d3;">${guests}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#c8a97e;">📅 Date</td>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#f5e6d3;">${formattedDate}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#c8a97e;">🕐 Time</td>
-                            <td style="padding:12px 0;border-bottom:1px solid rgba(200,169,126,0.2);color:#f5e6d3;">${time}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:12px 0;color:#c8a97e;">📝 Special Requests</td>
-                            <td style="padding:12px 0;color:#f5e6d3;">${requests || 'None'}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div style="padding:20px 30px;background:rgba(200,169,126,0.1);text-align:center;font-size:12px;color:rgba(245,230,211,0.5);">
-                    Sent from The Signature Brew Website Reservation System
-                </div>
-            </div>
-        `
-    };
 
-    // Confirmation email to customer
-    const customerMailOptions = {
-        from: '"The Signature Brew" <manavvalera05@gmail.com>',
-        to: email,
-        subject: `Your Reservation at The Signature Brew is Confirmed! ☕`,
-        html: `
-            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#1a1412;color:#f5e6d3;border-radius:16px;overflow:hidden;">
-                <div style="background:linear-gradient(135deg,#c8a97e,#8a6d3b);padding:30px;text-align:center;">
-                    <h1 style="margin:0;color:#0a0908;font-size:24px;">☕ Reservation Confirmed!</h1>
-                </div>
-                <div style="padding:30px;">
-                    <p style="font-size:16px;">Hello <strong>${name}</strong>,</p>
-                    <p>Thank you for reserving a table at <strong>The Signature Brew</strong>! Here are your booking details:</p>
-                    <div style="background:rgba(200,169,126,0.1);border:1px solid rgba(200,169,126,0.2);border-radius:12px;padding:20px;margin:20px 0;">
-                        <p>📅 <strong>Date:</strong> ${formattedDate}</p>
-                        <p>🕐 <strong>Time:</strong> ${time}</p>
-                        <p>👥 <strong>Guests:</strong> ${guests}</p>
-                    </div>
-                    <p>We look forward to welcoming you! If you need to modify your reservation, please call us at <strong>+91 98765 43210</strong>.</p>
-                    <p style="color:#c8a97e;">With love,<br>Team The Signature Brew ☕</p>
-                </div>
-                <div style="padding:20px;background:rgba(200,169,126,0.1);text-align:center;font-size:12px;color:rgba(245,230,211,0.5);">
-                    83 /A हाई विद्यालय,Alkapuri, Vadodara, Gujarat 390007 | +91 81412 87148 
-                </div>
-            </div>
-        `
-    };
+    // CUSTOMER EMAIL
+    await transporter.sendMail({
+      from: `"The Signature Brew Cafe" <${process.env.EMAIL}>`,
+      to: email,
+      subject: "✅ Reservation Confirmed",
+      html: `
 
-    try {
-        await transporter.sendMail(ownerMailOptions);
-        await transporter.sendMail(customerMailOptions);
-        console.log(`✅ Reservation confirmed: ${name} - ${formattedDate} at ${time}`);
-        res.json({ success: true, message: 'Reservation confirmed! Emails sent.' });
-    } catch (error) {
-        console.error('❌ Email error:', error);
-        res.status(500).json({ error: 'Failed to send confirmation email.' });
-    }
+<div style="background:#f4f4f4;padding:30px;font-family:Arial">
+
+<div style="max-width:600px;margin:auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,0.15)">
+
+<div style="background:#4CAF50;color:white;padding:25px;text-align:center">
+<h2>Reservation Confirmed</h2>
+<p>We look forward to serving you ☕</p>
+</div>
+
+<div style="padding:25px">
+
+<p>Hello <b>${name}</b>,</p>
+
+<p>Your table reservation at <b>The Signature Brew Cafe</b> has been successfully confirmed.</p>
+
+<h3 style="margin-top:25px;color:#333">Booking Details</h3>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;margin-top:10px">
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Date</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${formattedDate}</td>
+</tr>
+
+<tr>
+<td style="padding:10px;border-bottom:1px solid #ddd"><b>Time</b></td>
+<td style="padding:10px;border-bottom:1px solid #ddd">${time}</td>
+</tr>
+
+<tr>
+<td style="padding:10px"><b>Guests</b></td>
+<td style="padding:10px">${guests}</td>
+</tr>
+
+</table>
+
+<p style="margin-top:25px">
+If you need to modify your reservation please contact us.
+</p>
+
+</div>
+
+<div style="background:#fafafa;padding:15px;text-align:center;font-size:12px;color:#777">
+Thank you for choosing The Signature Brew Cafe
+</div>
+
+</div>
+</div>
+
+`
+    });
+
+    res.json({ success: true });
+
+  } catch (error) {
+
+    console.log(error);
+    res.status(500).json({ error: "Email failed" });
+
+  }
+
 });
 
-// Serve the website
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+
+// Homepage
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
+
 
 app.listen(PORT, () => {
-    console.log(`\n☕  server running at http://localhost:${PORT}\n`);
+  console.log(`Server running on port ${PORT}`);
 });
